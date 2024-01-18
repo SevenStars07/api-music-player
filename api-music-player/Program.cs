@@ -42,6 +42,11 @@ public class Program
 
         app.UseAuthorization();
 
+        app.MapGet("/greet/{name}", (HttpContext httpContext, string name) =>
+        {
+            return $"Hello {name}";
+        }).WithName("HelloWorld").WithOpenApi();
+
         app.MapGet("/get-songs", async (HttpContext httpContext, IConfiguration configuration) =>
             {
                 await using var connection = new NpgsqlConnection(configuration.GetConnectionString("Database"));
