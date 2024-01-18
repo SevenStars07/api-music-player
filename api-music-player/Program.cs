@@ -42,16 +42,6 @@ public class Program
 
         app.UseAuthorization();
 
-        app.MapGet("/greet/{name}", (HttpContext httpContext, IConfiguration configuration, string name) =>
-        {
-            return new
-            {
-                Greet = $"Hello {name}",
-                Db = configuration.GetConnectionString("Database"),
-                AzureBlobStorage = configuration.GetConnectionString("AzureBlobStorage")
-            };
-        }).WithName("HelloWorld").WithOpenApi();
-
         app.MapGet("/get-songs", async (HttpContext httpContext, IConfiguration configuration) =>
             {
                 await using var connection = new NpgsqlConnection(configuration.GetConnectionString("Database"));
